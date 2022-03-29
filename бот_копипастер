@@ -120,8 +120,39 @@ tags = ''
 Слова исключения:
 Bad_Keys = ['йй', 'qq']
 
+pip install telethon
 
 
+
+ДЛЯ ДОЛБАЕБОВ
+from telethon.sync import TelegramClient, events
+from telethon.tl.types import Channel
+import asyncio
+api_id      =
+api_hash    = ""
+
+mychan        = 'me' # куда пересылать
+channels    = 'me' # откуда пересылать
+
+BADTEXT = {'t.me', 'http', 'подписаться', '@', 'joinchat'} # исключения
+
+client = TelegramClient('myApp15', api_id, api_hash)
+print("[+] activate")
+
+def to_lower(word: str):
+    return word.lower()
+    
+@client.on(events.NewMessage(chats=channels))
+async def my_event_handler(event: events.newmessage.NewMessage.Event):
+    global BADTEXT
+    message_text = event.raw_text
+    message_text_lowered = event.raw_text.lower()   
+    if not [element for element in BADTEXT if message_text_lowered.__contains__(element)]:
+        await asyncio.sleep(0.5) #задержка
+        await client.send_message(mychan, event.message)
+            
+with client:
+    client.run_until_disconnected()
 
 
 
